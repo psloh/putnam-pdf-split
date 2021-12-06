@@ -225,6 +225,7 @@ for pin in pinsSet:
 
 # Finally print out all of the commands
 print("#!/bin/sh")
+print("set -eux")
 print(f"mkdir -p {args.outputPrefix}/")
 for execCmd in execList:
     print(execCmd)
