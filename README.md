@@ -22,7 +22,6 @@ This writes a list of commands to standard output, which can be executed by
 running:
 
 ```
-mkdir -p out/
 . commands.sh
 ```
 

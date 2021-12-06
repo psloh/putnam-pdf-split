@@ -223,5 +223,8 @@ for pin in pinsSet:
     #print(f"MISSING {pin} parts: {','.join(missingParts)}")
 
 
+# Finally print out all of the commands
+print("#!/bin/sh")
+print(f"mkdir -p {args.outputPrefix}/")
 for execCmd in execList:
     print(execCmd)
