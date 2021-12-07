@@ -2,6 +2,7 @@
 
 import collections
 import os
+import stat
 import re
 import argparse
 import sys
@@ -17,7 +18,8 @@ REGEX_PDF_FILENAME = r"^.*\.pdf$"
 argParser = argparse.ArgumentParser()
 argParser.add_argument("controlFilename")
 argParser.add_argument("registrantsCsvFilename")
-argParser.add_argument("outputPrefix")
+argParser.add_argument("outPdfPrefix")
+argParser.add_argument("outCommandsShFilename")
 args = argParser.parse_args()
 
 # Global variables
@@ -137,7 +139,7 @@ def processPinProbPageToPdfPage(execList, pinProbPageToPdfPage, pdfFilename, pdf
         maxPage = pinProbToMaxPage[pinProb]
         pdfPageNums = [str(pinProbPageToPdfPage[pinProb + (solPageNum, )]) for
                 solPageNum in range(1, maxPage+1)]
-        execList.append(f"pdftk {pdfFilename} cat {' '.join(pdfPageNums)} output {args.outputPrefix}/{pin}{ab}{probNum}.pdf")
+        execList.append(f"pdftk {pdfFilename} cat {' '.join(pdfPageNums)} output {args.outPdfPrefix}/{pin}{ab}{probNum}.pdf")
         
 
     
@@ -220,12 +222,17 @@ for pin in pinsSet:
         pinPart = f"{pin}{part}"
         if pinPart not in pinPartsSeenSet:
             missingParts.append(part)
-    #print(f"MISSING {pin} parts: {','.join(missingParts)}")
+    print(f"No submission for {pin} parts: {','.join(missingParts)}")
 
 
 # Finally print out all of the commands
-print("#!/bin/sh")
-print("set -eux")
-print(f"mkdir -p {args.outputPrefix}/")
-for execCmd in execList:
-    print(execCmd)
+with open(args.outCommandsShFilename, "w") as outF:
+    outF.write("#!/bin/sh\n")
+    outF.write("set -eux\n")
+    outF.write(f"mkdir -p {args.outPdfPrefix}/\n")
+    for execCmd in execList:
+        outF.write(f"{execCmd}\n")
+
+# Make the command script executable
+st = os.stat(args.outCommandsShFilename)
+os.chmod(args.outCommandsShFilename, st.st_mode | stat.S_IEXEC)
