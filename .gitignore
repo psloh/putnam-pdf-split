@@ -1,6 +1,2 @@
-*.csv
-*.pdf
-aops-user-id.html
-commands.sh
 out/
 done/
