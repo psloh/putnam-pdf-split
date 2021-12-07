@@ -216,7 +216,7 @@ if pdfFilename != "":
 
 # Now do all splitting, but first report about PIN's which are missing
 missingSubmissions = collections.defaultdict(list)  # Dictionary from PIN -> list of missing parts
-for pin in pinsSet:
+for pin in sorted(pinsSet):
     missingParts = []
     for part in ("A", "B"):
         pinPart = f"{pin}{part}"
