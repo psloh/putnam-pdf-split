@@ -222,7 +222,8 @@ for pin in pinsSet:
         pinPart = f"{pin}{part}"
         if pinPart not in pinPartsSeenSet:
             missingParts.append(part)
-    print(f"No submission for {pin} parts: {','.join(missingParts)}")
+    if missingParts:
+        print(f"No submission for {pin} parts: {','.join(missingParts)}")
 
 
 # Finally print out all of the commands
