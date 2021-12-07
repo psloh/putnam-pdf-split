@@ -1,9 +1,9 @@
-### Putnam PDF Splitter and Uploader
+# Putnam PDF Splitter and Uploader
 
 Created by Po-Shen Loh to streamline the scanning/splitting process for
 Carnegie Mellon University's ~200 Putnam Competition participants in 2021.
 
-### Usage instructions
+# Usage instructions
 
 ## Copy list of PIN's from AoPS Putnam Supervisor Portal
 
@@ -70,7 +70,7 @@ two monitors at the same time. Create a single `control.txt` file (possibly
 with multiple people working in parallel, who then concatenate their
 results), with the following format:
 
-# Control file format
+### Control file format
 
 Suppose the control file looks like this:
 
